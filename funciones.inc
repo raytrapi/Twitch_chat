@@ -125,40 +125,59 @@ function cogerChat(){
   
   
   while (!feof($socket)) {
-      $salida=fgets($socket, 128);
+      $salida=fgets($socket, 6000);
       //$salida=str_replace("\n", "<br/>", $salida);
       //$salida=str_replace("\r", ".<br/>", $salida);
-      echo $salida."<br/>";
-      if($salida==$ESPERAS[0] || strpos($salida,$ESPERAS[1])>0){
-          $estado++; 
-      }
-      switch ($estado){
-          case 1:
-              $estado++;
-              //$mensaje="JOIN #84e60028-d67c-4c17-b5ee-c4776943f682\n";
-              //$mensaje="JOIN #chatrooms:441968303:35189105408\n";//
-              $mensaje="JOIN #prex_directo\n";
-              echo $mensaje."<br/>";
-              fwrite($socket,$mensaje);
-              break;
+      if($salida!=""){
+        //echo (new DateTime())->format("H:i:s") ."  ".$salida."<br/>";
+      
+          if($salida==$ESPERAS[0] || strpos($salida,$ESPERAS[1])>0){
+              $estado++; 
+          }
+          switch ($estado){
+              case 1:
+                  $estado++;
+                  //$mensaje="JOIN #84e60028-d67c-4c17-b5ee-c4776943f682\n";
+                  //$mensaje="JOIN #chatrooms:441968303:35189105408\n";//
+                  $mensaje="JOIN #prex_directo\n";
+                  //echo $mensaje."<br/>";
+                  fwrite($socket,$mensaje);
+                  break;
+                  
+              case 2:
+                  //$estado++;
+                  //$mensaje="JOIN #84e60028-d67c-4c17-b5ee-c4776943f682\n";
+                  //$mensaje="NOTICE\n";
+                  //echo $mensaje."<br/>";
+                  //fwrite($socket,$mensaje);
+                  
+                  
+                  
+                  break;
+          }
+          if(strpos($salida,"PING :tmi.twitch.tv")!==false){
+              //echo $mensaje."PONG :tmi.twitch.tv<br/>";
+              fwrite($socket,"PONG :tmi.twitch.tv\n");
+          }else{
+              //
+              $resultados=[];
+              $v=preg_match("/^:(.*)\!(.*)@(.*)\.tmi\.twitch\.tv (PRIVMSG|PART|JOIN) #(.*):(.*)/", $salida, $resultados);
+              if($v>0){
+                  echo (new DateTime())->format("H:i:s") ."  ".$resultados[1]. " dijo ".$resultados[6]."<br/>";
+              }
+              //echo print_r($resultados,true);
+              //echo $v;
+          }
+          if($estado==1 ){
+               
+          }else{
               
-          case 2:
-              $estado++;
-              //$mensaje="JOIN #84e60028-d67c-4c17-b5ee-c4776943f682\n";
-              //$mensaje="NOTICE\n";
-              //echo $mensaje."<br/>";
-              //fwrite($socket,$mensaje);
-              break;
-      }
-      if($estado==1 ){
-           
-      }else{
+          }
           
+          
+          ob_flush();
+          flush();
       }
-      
-      
-      ob_flush();
-      flush();
       
   }
   fclose($socket);

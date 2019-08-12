@@ -6,10 +6,10 @@
 
 include_once("funciones.inc");
 //cogerOAuth();
-//info();
-cogerChats();
-echo "<br/>";
-cogerStream();
+info();
+//cogerChats();
+//echo "<br/>";
+//cogerStream();
 echo "<br/>";
 
 cogerChat();
