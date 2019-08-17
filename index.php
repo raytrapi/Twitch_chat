@@ -5,7 +5,7 @@ use src\core\bd\BD;
    <head>
    		<link href="css/base.css" rel="stylesheet" type="text/css">
    		
-<meta http-equiv="refresh" content="2">
+<meta http-equiv="refresh" content="10">
 
    </head>
    <body >
@@ -16,10 +16,10 @@ $datos=BD::filas(BD::ejecutar("select m.id,m.fecha,m.idEstado,e.nombre,u.nombre 
                                 ." order by fecha desc limit 10"));
 if(count($datos)>0){
     echo "<ul>";
-    $i=10;
+    $i=1;
     foreach ($datos as $dato){
-        echo "<li style=\"opacity:".($i/10)."\"><strong>".$dato["usuario"]."</strong> ".$dato["mensaje"]."</li>";
-        $i--;
+        echo "<li class=\"c".$i."\"><strong>".$dato["usuario"]."</strong> ".$dato["mensaje"]."</li>";
+        $i++;
         
     };
     echo "</ul>";

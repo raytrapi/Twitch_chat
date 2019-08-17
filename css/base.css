@@ -2,13 +2,46 @@
 
 body{
 	font-family:roboto;
-	text-shadow: 0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,
-				 0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,
+	font-size: 40px;
+	text-shadow: 4px 4px 4px #d0d0d0; 
+	/*0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,
+				 0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff;
+				 /*,
 				 0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,
-				 0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff;	
+				 0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff;*/	
 }
 ul{
-	margin:0;
+	margin:5px;
 	padding:0;
 	list-style:none;
+}
+.c1{
+	font-size: 1em;	
+}
+.c2{
+	font-size:0.95em;
+	opacity: 0.9;
+}
+.c3{
+	font-size:0.90em;
+	opacity: 0.8;
+}
+.c4{
+	font-size:0.85em;
+	opacity: 0.7;
+}
+.c5{
+	font-size:0.80em;
+	opacity: 0.6;
+}
+.c6{
+	font-size:0.75em;
+	opacity: 0.5;
+}
+.c7,.c8,.c9,.c10{
+	font-size:0.70em;
+	opacity: 0.4;
+}
+strong{
+	font-size: 0.8em;
 }
