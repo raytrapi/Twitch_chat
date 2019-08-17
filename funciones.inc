@@ -1,4 +1,6 @@
 <?php
+use src\core\bd\BD;
+
 $urls=[
     "autenticacion"=>["servidor"=>"https://id.twitch.tv/oauth2/authorize"],
     "info"=>["servidor"=>"https://api.twitch.tv/helix/users"],
@@ -163,6 +165,17 @@ function cogerChat(){
               $resultados=[];
               $v=preg_match("/^:(.*)\!(.*)@(.*)\.tmi\.twitch\.tv (PRIVMSG|PART|JOIN) #(.*):(.*)/", $salida, $resultados);
               if($v>0){
+                  
+                  //TODO: CORREJIR 
+                  BD::ejecutar("insert into usuarios (nombre) values ('".$resultados[1]."')");
+                  $res=BD::ejecutar("select id from usuarios where nombre='".$resultados[1]."'");
+                  $datos=BD::filas($res);
+                  $idUsuario=$datos[0]["id"];
+                  
+                  
+                  
+                  BD::ejecutar("insert into mensajes (idEstado, idUsuario, mensaje) values (1,".$idUsuario.", '".$resultados[6]."')");
+                  
                   echo (new DateTime())->format("H:i:s") ."  ".$resultados[1]. " dijo ".$resultados[6]."<br/>";
               }
               //echo print_r($resultados,true);
