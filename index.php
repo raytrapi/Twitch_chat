@@ -16,8 +16,10 @@ $datos=BD::filas(BD::ejecutar("select m.id,m.fecha,m.idEstado,e.nombre,u.nombre 
                                 ." order by fecha desc limit 10"));
 if(count($datos)>0){
     echo "<ul>";
+    $i=10;
     foreach ($datos as $dato){
-        echo "<li><strong>".$dato["usuario"]."</strong> ".$dato["mensaje"]."</li>";
+        echo "<li style=\"opacity:".($i/10)."\"><strong>".$dato["usuario"]."</strong> ".$dato["mensaje"]."</li>";
+        $i--;
         
     };
     echo "</ul>";

@@ -118,7 +118,7 @@ function cogerChat(){
     echo "NO SOCKET [".$error."]";
     return;
   }
-  socket_set_timeout($socket, 30);
+  socket_set_timeout($socket, 10);
   $conexion="PASS oauth:".TOKEN."\nNICK ".USUARIO."\n";
   fwrite($socket,$conexion);
   $salida="-";
@@ -166,7 +166,7 @@ function cogerChat(){
               $v=preg_match("/^:(.*)\!(.*)@(.*)\.tmi\.twitch\.tv (PRIVMSG|PART|JOIN) #(.*):(.*)/", $salida, $resultados);
               if($v>0){
                   
-                  //TODO: CORREJIR 
+                  //TODO: CORREGIR 
                   BD::ejecutar("insert into usuarios (nombre) values ('".$resultados[1]."')");
                   $res=BD::ejecutar("select id from usuarios where nombre='".$resultados[1]."'");
                   $datos=BD::filas($res);
