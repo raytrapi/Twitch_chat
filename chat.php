@@ -8,7 +8,7 @@ use src\core\bd\BD;
 require_once 'src/core/bd/bd.inc';
 include_once("funciones.inc");
 //cogerOAuth();
-//info();
+//print_r(info("prex_directo"));
 //cogerChats();
 //echo "<br/>";
 //cogerStream();

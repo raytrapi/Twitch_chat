@@ -29,12 +29,12 @@ function cogerOAuth(){
     
 }
 
-function info(){
+function info($usuario){
     //curl -H 'Client-ID: p0gch4mp101fy451do9uod1s1x9i4a' \
     //-X GET 'https://api.twitch.tv/helix/streams?game_id=33214'
     global $urls;
     $s = curl_init();
-    $parametros="login=prex_directo";
+    $parametros="login=".$usuario;
     curl_setopt($s,CURLOPT_URL,$urls["info"]["servidor"]."?".$parametros);
     
     $cabeceras = array("Client-ID: ".ID_CLIENTE);
@@ -47,8 +47,11 @@ function info(){
     
     $resultado=curl_exec($s);
     $info = curl_getinfo($s,CURLINFO_HTTP_CODE);
-    print_r($resultado);
-    curl_close($s);/**/ 
+    
+    //print_r($resultado);
+    curl_close($s);/**/
+    
+    return json_decode($resultado);
 }
 
 function cogerChats(){
@@ -163,20 +166,37 @@ function cogerChat(){
           }else{
               //
               $resultados=[];
-              $v=preg_match("/^:(.*)\!(.*)@(.*)\.tmi\.twitch\.tv (PRIVMSG|PART|JOIN) #(.*):(.*)/", $salida, $resultados);
-              if($v>0){
+              $parteRespuesta=explode(":",$salida,3);
+              //$v=preg_match("/^:(.*)\!(.*)@(.*)\.tmi\.twitch\.tv (PRIVMSG|PART|JOIN) #(.*):(.*)$/", $salida, $resultados);
+              $v=preg_match("/(.*)\!(.*)@(.*)\.tmi\.twitch\.tv (PRIVMSG|PART) #(.*)/", $parteRespuesta[1], $resultados);
+              if(count($resultados)>3){
                   
-                  //TODO: CORREGIR 
-                  BD::ejecutar("insert into usuarios (nombre) values ('".$resultados[1]."')");
-                  $res=BD::ejecutar("select id from usuarios where nombre='".$resultados[1]."'");
-                  $datos=BD::filas($res);
-                  $idUsuario=$datos[0]["id"];
+                  $usuario=BD::filas(BD::ejecutar("select * from usuarios where nombre='".$resultados[1]."'"));
+                  if(count($usuario)<1){
+                      $datosUsuario=info($resultados[1]);
+                          
+                      BD::ejecutar("insert into usuarios (nombre, avatar) values ('".$resultados[1]."','".$datosUsuario->data[0]->profile_image_url."')");
+
+                     
+                     
+                     
+                     
+                     $res=BD::ejecutar("select id from usuarios where nombre='".$resultados[1]."'");
+                     $datos=BD::filas($res);
+                     $idUsuario=$datos[0]["id"];
+                  }else{
+                      $idUsuario=$usuario[0]["id"];
+                      $datosUsuario=info($resultados[1]);
+                      BD::ejecutar("update usuarios set avatar='".($datosUsuario->data[0]->profile_image_url)."' where nombre= '".$resultados[1]."'");
+                  }
                   
                   
                   
-                  BD::ejecutar("insert into mensajes (idEstado, idUsuario, mensaje) values (1,".$idUsuario.", '".$resultados[6]."')");
                   
-                  echo (new DateTime())->format("H:i:s") ."  ".$resultados[1]. " dijo ".$resultados[6]."<br/>";
+                  
+                  BD::ejecutar("insert into mensajes (idEstado, idUsuario, mensaje) values (1,".$idUsuario.", '".$parteRespuesta[2]."')");
+                  
+                  echo (new DateTime())->format("H:i:s") ."  ".$resultados[1]. " dijo ".$parteRespuesta[2]."<br/>";
               }
               //echo print_r($resultados,true);
               //echo $v;

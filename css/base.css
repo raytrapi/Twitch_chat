@@ -2,18 +2,18 @@
 
 body{
 	font-family:roboto;
-	font-size: 40px;
+	font-size: 35px;
 	text-shadow: 4px 4px 4px #d0d0d0; 
-	/*0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,
-				 0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff,0 0 1px #fff;
-				 /*,
-				 0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,
-				 0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff;*/	
+		
 }
 ul{
-	margin:5px;
+	margin:10px;
 	padding:0;
 	list-style:none;
+}
+ul li img{
+ width: 64px;
+ vertical-align: middle;
 }
 .c1{
 	font-size: 1em;	
