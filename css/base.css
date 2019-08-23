@@ -2,18 +2,41 @@
 
 body{
 	font-family:roboto;
-	font-size: 35px;
-	text-shadow: 4px 4px 4px #d0d0d0; 
+	font-size: 30px;
+	 
 		
 }
 ul{
 	margin:10px;
 	padding:0;
 	list-style:none;
+	position: bottom;
+	
+}
+ul li{
+	background-color: #000040d0;
+	color: #ffffff; 
+	padding:5px; 
+	margin: 2px 0; 
+	border-radius:5px
+}
+div.avatar{
+	display: inline-block;
+	width: 80px;
+	vertical-align: top;
+	text-align: center;
 }
 ul li img{
- width: 64px;
+ width: 48px;
  vertical-align: middle;
+}
+strong{
+	font-size: 0.7em;
+}
+span.texto{
+	display:inline-block;
+	width: calc(100% - 90px);
+	margin-left: 10px;
 }
 .c1{
 	font-size: 1em;	
@@ -41,7 +64,4 @@ ul li img{
 .c7,.c8,.c9,.c10{
 	font-size:0.70em;
 	opacity: 0.4;
-}
-strong{
-	font-size: 0.8em;
 }
